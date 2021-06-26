@@ -1,0 +1,21 @@
+# .gitignore
+
+# Temporary files
+.#~
+*.*~
+~.#~
+/.#~
+
+# Ide Files
+.vscode*
+.idea/
+
+# Virtual Environment
+venv/
+*.pyc
+
+# Logs
+log/LOG.log
+
+# Cache
+__pycache__/
