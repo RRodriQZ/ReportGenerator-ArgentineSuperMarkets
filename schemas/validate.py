@@ -3,7 +3,7 @@ import json
 import os
 
 
-def validate_products_for_schema(json_product: dict) -> None:
+def validate_products_for_schema(json_product: dict[str, str, float]) -> None:
     file_path = os.path.join(os.path.dirname(__file__), 'product.json')
     with open(file_path, 'r') as values:
         SCHEMA_PRODUCTS = json.load(values)
