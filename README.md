@@ -7,6 +7,7 @@ Report from Argentine SuperMarkets prices.
 # Pre Requirements 📋 #
 
 * **Python 3**
+* **Pipenv**
   
 # Configure Gmail 📧 #
 
@@ -18,6 +19,10 @@ Report from Argentine SuperMarkets prices.
 4) Go to --> **main.py** and set addressee
 
 # Setup Python Virtual Environment 🔧 #
+```cmd
+pip install pipenv
+```
+
 **Windows** CMD:
 ```cmd
 python -m venv venv

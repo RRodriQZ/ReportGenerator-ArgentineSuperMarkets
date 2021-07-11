@@ -1,7 +1,8 @@
-from functions.functions import get_response_by_url,\
-    clean_product_value, get_name_product
 from model.supermarket_product_model import SupermarketProduct
 from schemas.validate import validate_products_for_schema
+from functions.functions import (get_response_by_url,
+                                 clean_product_value,
+                                 get_name_product)
 from scrap.interface_supermarket import SuperMarket
 from functions.decorators import singleton
 from log.logger import Log
@@ -27,9 +28,11 @@ class DiaMarket(SuperMarket):
                 product_name = get_name_product(market_DIA, title=market_value)
                 product_price = clean_product_value(market_DIA, value=market_value)
 
-                product_json = {'market_name': market_DIA,
-                                'product': product_name,
-                                'price': product_price}
+                product_json: dict[str, str, float] = {
+                    'market_name': market_DIA,
+                    'product': product_name,
+                    'price': product_price
+                }
 
                 validate_products_for_schema(product_json)
 
