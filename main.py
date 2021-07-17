@@ -4,9 +4,9 @@ from scrap.diaMarket import DiaMarket
 from view.products_view import View
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     controller = Controller(DiaMarket(), View())
     controller.show_supermarket_products()
 
     # Envio del email con el reporte de productos al "Destinatario"
-    send_email_whit_report_products(addressee='addressee_example@gmail.com')
+    send_email_whit_report_products(addressee="addressee_example@gmail.com")

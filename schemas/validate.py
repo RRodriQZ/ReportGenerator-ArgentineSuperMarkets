@@ -4,8 +4,8 @@ import os
 
 
 def validate_products_for_schema(json_product: dict[str, str, float]) -> None:
-    file_path = os.path.join(os.path.dirname(__file__), 'product.json')
-    with open(file_path, 'r') as values:
+    file_path = os.path.join(os.path.dirname(__file__), "product.json")
+    with open(file_path, "r") as values:
         SCHEMA_PRODUCTS = json.load(values)
 
     validate(instance=json_product, schema=SCHEMA_PRODUCTS)
