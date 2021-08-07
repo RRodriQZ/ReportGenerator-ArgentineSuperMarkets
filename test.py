@@ -1,4 +1,4 @@
-from scrap.diaMarket import DiaMarketScraping
+from scrap.diaMarket_scraping import DiaMarketScraping
 import unittest
 
 

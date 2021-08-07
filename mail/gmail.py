@@ -1,6 +1,6 @@
+from scrap.diaMarket_scraping import DiaMarketScraping
 from functions.functions import build_body_to_messaje
 from email.mime.multipart import MIMEMultipart
-from scrap.diaMarket import DiaMarketScraping
 from configparser import ConfigParser
 from email.mime.text import MIMEText
 from log.logger import Log
