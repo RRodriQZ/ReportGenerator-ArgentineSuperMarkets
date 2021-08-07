@@ -2,7 +2,7 @@ from model.supermarket_product_model import SupermarketProduct
 from abc import ABCMeta, abstractmethod
 
 
-class SuperMarket(object):
+class SuperMarketScraping(object):
     __metaclass__ = ABCMeta
 
     @abstractmethod
