@@ -1,7 +1,6 @@
-from model.supermarket_product_model import SupermarketProduct
 from functions.functions import build_body_to_messaje
 from email.mime.multipart import MIMEMultipart
-from scrap.diaMarket import DiaMarket
+from scrap.diaMarket import DiaMarketScraping
 from configparser import ConfigParser
 from email.mime.text import MIMEText
 from log.logger import Log
@@ -18,13 +17,13 @@ PASSWORD_GMAIL = config["Gmail"]["password_Gmail"]
 
 
 def get_report_supermermarket_prices() -> str:
-    """Retorno el scraping de supermercados para el armado del cuerpo del email.
+    """Return the scraping of supermarkets for the assembly of the body of the email
 
     :return: str
     """
     try:
-        dia_market_products = DiaMarket().get_products_from_markets()
-        body = build_body_to_messaje(dia_market_products)
+        dia_market_products = DiaMarketScraping().get_products_from_markets()
+        body = build_body_to_messaje(products_DIA=dia_market_products)
         return body
 
     except Exception as e:
@@ -32,15 +31,15 @@ def get_report_supermermarket_prices() -> str:
 
 
 def send_email_whit_report_products(addressee: str) -> None:
-    """Envio un mail con las ofertas de los productos de Supermercados
-     al destinatario.
+    """Sended an email with the offers of the Supermarkets products
+    to the recipient
 
     :param addressee: str
     """
     try:
         BODY = get_report_supermermarket_prices()
 
-        SUBJECT = "OFERTA de Supermercados"
+        SUBJECT = "SUPERMARKET OFFER"
 
         msg = MIMEMultipart()
         msg["From"] = USER_GMAIL
@@ -57,9 +56,9 @@ def send_email_whit_report_products(addressee: str) -> None:
         smtpObj.sendmail(USER_GMAIL, addressee, msg.as_string())
         smtpObj.quit()
 
-        logger.info(f'Se envio correctamente el reporte al email de: "{addressee}"')
+        logger.info(f'The report was successfully sent to the email of: "{addressee}"')
 
     except Exception as e:
         logger.error(
-            f'ERROR no se pudo enviar el reporte al email de: "{addressee}", error: "{e}"'
+            f'ERROR the report could not be sent to the email of: "{addressee}", error: "{e}"'
         )

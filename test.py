@@ -1,11 +1,11 @@
-from scrap.diaMarket import DiaMarket
+from scrap.diaMarket import DiaMarketScraping
 import unittest
 
 
 class MarketProducts(unittest.TestCase):
     def setUp(self):
         self.product_list = []
-        self.market = DiaMarket()
+        self.market = DiaMarketScraping()
         self.market_products = self.market.get_products_from_markets()
 
     def tearDown(self):

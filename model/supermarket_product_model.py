@@ -14,8 +14,4 @@ class SupermarketProduct(object):
         return self._price
 
     def __str__(self) -> str:
-        return (
-            f'[MARKET]: "{self.get_market()}" '
-            f'[PRODUCT]: "{self.get_product()}" '
-            f"[PRICE]: $ {self.get_price()}"
-        )
+        return f"[MARKET]: {self.get_market()} [PRODUCT]: {self.get_product()} [PRICE]: $ {self.get_price()}"

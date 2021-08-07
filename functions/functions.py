@@ -1,7 +1,8 @@
 from model.supermarket_product_model import SupermarketProduct
+from unicodedata import normalize
 from bs4 import BeautifulSoup
 from log.logger import Log
-import requests
+import requests, re
 import urllib3
 
 urllib3.disable_warnings()
@@ -12,7 +13,7 @@ logger = Log().get_logger(__name__)
 
 
 def get_response_by_url(url: str) -> BeautifulSoup:
-    """Retorno el response del llamado a la URL del Supermercado.
+    """Return the response of the call to the URL of the Supermarket
 
     :param url: str
     :return: BeautifulSoup
@@ -23,28 +24,24 @@ def get_response_by_url(url: str) -> BeautifulSoup:
         return response
 
     except Exception as e:
-        logger.error(f'Error al devolver el Response de url: "{url}",' f' error: "{e}"')
+        logger.error(f'Error returning the Response of url: "{url}", error: "{e}"')
 
 
-def get_name_product(supermarket: str, title: BeautifulSoup) -> str:
-    """Retorno el nombre del producto del Scraping asociado al Supermercado.
+def get_name_product_normalized(supermarket: str, title: BeautifulSoup) -> str:
+    """Return the name of the Scraping product associated with the Supermarket
 
     :param supermarket: str
     :param title: BeautifulSoup
     :return: str
     """
-    try:
-        if supermarket == "DIA":
-            title_product = title.h3.a.text.strip()
-            if title_product is not None:
-                return title_product
-
-    except:
-        pass
+    if supermarket == "DIA":
+        name_of_product = title.h3.a.text.strip()
+        name_of_product_normalized = get_normalizer_title(title=name_of_product)
+        return name_of_product_normalized
 
 
 def clean_product_value(supermarket: str, value: BeautifulSoup) -> float:
-    """Retorno el valor limpio del producto.
+    """Return the clean value of the product
 
     :param supermarket: str
     :param value: BeautifulSoup
@@ -62,7 +59,7 @@ def clean_product_value(supermarket: str, value: BeautifulSoup) -> float:
 
 
 def build_body_to_messaje(products_DIA: list[SupermarketProduct]) -> str:
-    """Retorno el cuerpo del mensaje en formato de texto.
+    """Return the body of the message in text format
 
     :param products_DIA: list[SupermarketProduct]
     :return: str
@@ -80,4 +77,22 @@ def build_body_to_messaje(products_DIA: list[SupermarketProduct]) -> str:
         return body
 
     except Exception as e:
-        logger.error(f'Error en el armado del cuerpo del mensaje, error: "{e}"')
+        logger.error(f'Error in assembling the body of the message, error: "{e}"')
+
+
+def get_normalizer_title(title: str) -> str:
+    """Return the title of the standardized product
+
+    :param title: str
+    :return: str
+    """
+    title = re.sub(
+        r"([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+",
+        r"\1",
+        normalize("NFD", title),
+        0,
+        re.I,
+    )
+    title_formated = normalize("NFC", title)
+
+    return title_formated

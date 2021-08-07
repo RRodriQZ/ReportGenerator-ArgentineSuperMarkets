@@ -1,17 +1,17 @@
 from model.supermarket_product_model import SupermarketProduct
+from scrap.interface_supermarket import SuperMarketScraping
 from schemas.validate import validate_products_for_schema
-from scrap.interface_supermarket import SuperMarket
 from functions.decorators import singleton
 from functions.functions import (
     get_response_by_url,
     clean_product_value,
-    get_name_product,
+    get_name_product_normalized
 )
 from log.logger import Log
 
 
 @singleton
-class DiaMarket(SuperMarket):
+class DiaMarketScraping(SuperMarketScraping):
     def __init__(self) -> None:
         super().__init__()
         self.logger = Log().get_logger(__name__)
@@ -24,12 +24,12 @@ class DiaMarket(SuperMarket):
         response = get_response_by_url(url=self.url)
 
         self.logger.info(
-            f"******************[ INICIADO EL SCRAPING ]******************"
+            f"******************[ SCRAPING STARTED ]******************"
         )
 
         for market_value in response.find_all("li"):
             try:
-                product_name = get_name_product(market_DIA, title=market_value)
+                product_name = get_name_product_normalized(supermarket=market_DIA, title=market_value)
                 product_price = clean_product_value(market_DIA, value=market_value)
 
                 product_json: dict[str, str, float] = {
@@ -47,7 +47,7 @@ class DiaMarket(SuperMarket):
                 product_list.append(new_product)
 
                 self.logger.info(
-                    f'* Se extrajeron correctamente el producto: "{new_product.__str__()}"'
+                    f'* The product was correctly extracted: "{new_product.__str__()}"'
                 )
 
             except:
