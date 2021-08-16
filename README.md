@@ -5,12 +5,9 @@ Report from Argentine SuperMarkets prices.
 * Supermercado Dia
 
 # Pre Requirements 📋 #
+* **Python 3**-**pipenv** / **Docker**
 
-* **Python 3**
-* **Pipenv**
-
-# Configure Gmail 📧 #
-
+# Configure Gmail 📧
 **Configure:** You credentials Gmail
 
 1) Go to folder --> **./mail/config.ini**
