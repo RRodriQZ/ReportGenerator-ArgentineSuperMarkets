@@ -19,7 +19,7 @@ class DiaMarketScraping(SuperMarketScraping):
     logger: Log = Log().get_logger(__name__)
     url: str = "https://diaonline.supermercadosdia.com.ar/especial-ofertas"
 
-    def get_products_from_markets(self) -> list[SupermarketProduct]:
+    def get_products_from_markets(self) -> list:
         product_list: list[SupermarketProduct] = []
         response = get_response_by_url(url=self.url)
 

@@ -43,6 +43,11 @@ python main.py
 ```cmd
 python test.py -v
 ```
+# Running Docker 🐳
+```cmd
+docker build -t supermarket .
+docker run -it supermarket
+```
 # Author 🖋 #
 * Rodrigo Quispe - Developer - [RRodriQZ]
 
