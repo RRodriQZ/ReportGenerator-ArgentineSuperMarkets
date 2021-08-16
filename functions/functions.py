@@ -2,7 +2,8 @@ from model.supermarket_product_model import SupermarketProduct
 from unicodedata import normalize
 from bs4 import BeautifulSoup
 from log.logger import Log
-import requests, re
+import requests
+import re
 import urllib3
 
 urllib3.disable_warnings()

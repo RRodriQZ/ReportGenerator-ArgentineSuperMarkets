@@ -23,7 +23,7 @@ class DiaMarketScraping(SuperMarketScraping):
         product_list: list[SupermarketProduct] = []
         response = get_response_by_url(url=self.url)
 
-        self.logger.info(f"******************[ SCRAPING STARTED ]******************")
+        self.logger.info(f"*********************[ SCRAPING STARTED ]*********************")
 
         for market_value in response.find_all("li"):
             try:
@@ -47,5 +47,7 @@ class DiaMarketScraping(SuperMarketScraping):
 
             except:
                 pass
+
+        self.logger.info(f"*********************[ SCRAPING FINISHED ]*********************")
 
         return product_list
