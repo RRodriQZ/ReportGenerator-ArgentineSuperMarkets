@@ -1,5 +1,5 @@
-from marshmallow import Schema, fields, post_load
 from model.supermarket_product_model import SupermarketProduct
+from marshmallow import Schema, fields, post_load
 
 
 class SupermarketProductSchema(Schema):
