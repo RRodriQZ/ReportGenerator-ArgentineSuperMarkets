@@ -1,4 +1,3 @@
-from model.supermarket_product_model import SupermarketProduct
 from unicodedata import normalize
 from bs4 import BeautifulSoup
 from log.logger import Log
@@ -69,7 +68,7 @@ def clean_product_value_market_dia(product: BeautifulSoup) -> float:
     return float(product_price_format)
 
 
-def get_title_product_and_product_value(supermarket: str, value: BeautifulSoup) -> tuple[str, float]:
+def get_title_product_and_product_value(supermarket: str, value: BeautifulSoup):
     """Return product associated with the Supermarket and value of the product
 
     :param supermarket: str
@@ -86,7 +85,7 @@ def get_title_product_and_product_value(supermarket: str, value: BeautifulSoup) 
         pass
 
 
-def build_body_to_messaje(products_DIA: list[SupermarketProduct]) -> str:
+def build_body_to_messaje(products_DIA: list) -> str:
     """Return the body of the message in text format
 
     :param products_DIA: list[SupermarketProduct]
