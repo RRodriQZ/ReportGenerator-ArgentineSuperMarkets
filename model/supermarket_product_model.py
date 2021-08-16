@@ -1,17 +1,22 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class SupermarketProduct(object):
-    def __init__(self, market: str, product: str, price: float) -> None:
-        self._market = market
-        self._product = product
-        self._price = price
+    """Class represents SupermarketProduct model fields: market, product & price"""
+
+    market: str
+    product: str
+    price: float
 
     def get_market(self) -> str:
-        return self._market
+        return self.market
 
     def get_product(self) -> str:
-        return self._product
+        return self.product
 
     def get_price(self) -> float:
-        return self._price
+        return self.price
 
     def __str__(self) -> str:
         return f"[MARKET]: {self.get_market()} [PRODUCT]: {self.get_product()} [PRICE]: $ {self.get_price()}"

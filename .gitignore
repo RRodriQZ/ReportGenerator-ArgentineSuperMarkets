@@ -17,5 +17,8 @@ venv/
 # Logs
 log/LOG.log
 
+# Installer logs
+**/*.egg-info
+
 # Cache
 __pycache__/

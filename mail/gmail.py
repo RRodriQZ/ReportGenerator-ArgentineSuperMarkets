@@ -11,7 +11,7 @@ import smtplib
 logger = Log().get_logger(__name__)
 
 config = ConfigParser()
-config.read("mail/config.ini")
+config.read("mail/resources/config.ini")
 USER_GMAIL = config["Gmail"]["user_Gmail"]
 PASSWORD_GMAIL = config["Gmail"]["password_Gmail"]
 
@@ -27,7 +27,7 @@ def get_report_supermermarket_prices() -> str:
         return body
 
     except Exception as e:
-        logger.error(f'Error en el cuerpo del mensaje de respuesta, error: "{e}"')
+        logger.error(f'Response message body, error: "{e}"')
 
 
 def send_email_whit_report_products(addressee: str) -> None:

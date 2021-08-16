@@ -27,33 +27,60 @@ def get_response_by_url(url: str) -> BeautifulSoup:
         logger.error(f'Error returning the Response of url: "{url}", error: "{e}"')
 
 
-def get_name_product_normalized(supermarket: str, title: BeautifulSoup) -> str:
+def get_normalizer_title(title: str) -> str:
+    """Return the title of the standardized product
+
+    :param title: str
+    :return: str
+    """
+    title = re.sub(
+        r"([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+",
+        r"\1",
+        normalize("NFD", title),
+        0,
+        re.I,
+    )
+    title_formated = normalize("NFC", title)
+
+    return title_formated
+
+
+def get_name_product_normalized_market_dia(title: BeautifulSoup) -> str:
     """Return the name of the Scraping product associated with the Supermarket
 
-    :param supermarket: str
     :param title: BeautifulSoup
     :return: str
     """
-    if supermarket == "DIA":
-        name_of_product = title.h3.a.text.strip()
-        name_of_product_normalized = get_normalizer_title(title=name_of_product)
-        return name_of_product_normalized
+    name_of_product = title.h3.a.text.strip()
+    name_of_product_normalized = get_normalizer_title(title=name_of_product)
+    return name_of_product_normalized
 
 
-def clean_product_value(supermarket: str, value: BeautifulSoup) -> float:
+def clean_product_value_market_dia(product: BeautifulSoup) -> float:
     """Return the clean value of the product
+
+    :param product: BeautifulSoup
+    :return: float
+    """
+    product = product.find("div", {"class": "price"}).span.text.strip()
+    product_price_format = (product.split("$ ")[1]).replace(",", ".")
+
+    return float(product_price_format)
+
+
+def get_title_product_and_product_value(supermarket: str, value: BeautifulSoup) -> tuple[str, float]:
+    """Return product associated with the Supermarket and value of the product
 
     :param supermarket: str
     :param value: BeautifulSoup
-    :return: float
+    :return: tuple[str, float]
     """
     try:
         if supermarket == "DIA":
-            product = value.find("div", {"class": "price"}).span.text.strip()
-            product_price_format = (product.split("$ ")[1]).replace(",", ".")
+            title_product = get_name_product_normalized_market_dia(title=value)
+            product = clean_product_value_market_dia(product=value)
 
-            return float(product_price_format)
-
+            return title_product, product
     except:
         pass
 
@@ -78,21 +105,3 @@ def build_body_to_messaje(products_DIA: list[SupermarketProduct]) -> str:
 
     except Exception as e:
         logger.error(f'Error in assembling the body of the message, error: "{e}"')
-
-
-def get_normalizer_title(title: str) -> str:
-    """Return the title of the standardized product
-
-    :param title: str
-    :return: str
-    """
-    title = re.sub(
-        r"([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+",
-        r"\1",
-        normalize("NFD", title),
-        0,
-        re.I,
-    )
-    title_formated = normalize("NFC", title)
-
-    return title_formated
